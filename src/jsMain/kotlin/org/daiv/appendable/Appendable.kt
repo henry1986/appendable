@@ -1,5 +1,6 @@
 package org.daiv.appendable
 
+import mu.KotlinLogging
 import org.w3c.dom.Node
 
 interface Appendable {

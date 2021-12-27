@@ -1,16 +1,16 @@
 buildscript {
     repositories {
         maven { url = uri("https://repo.gradle.org/gradle/libs-releases") }
-        maven("https://daiv.org/artifactory/gradle-dev-local")
+        maven("https://artifactory.daiv.org/artifactory/gradle-dev-local")
     }
     dependencies {
-        classpath("org.daiv.dependency:DependencyHandling:0.0.58")
+        classpath("org.daiv.dependency:DependencyHandling:0.1.11")
     }
 }
 
 plugins {
-    kotlin("multiplatform") version "1.4.10"
-//    kotlin("plugin.serialization") version "1.4.10"
+    kotlin("multiplatform") version "1.6.10"
+//    kotlin("plugin.serialization") version "1.6.10"
     id("com.jfrog.artifactory") version "4.17.2"
     id("org.daiv.dependency.VersionsPlugin") version "0.1.3"
     `maven-publish`
@@ -23,7 +23,7 @@ version = versions.setVersion { appendable }
 
 repositories {
     mavenCentral()
-    maven("https://daiv.org/artifactory/gradle-dev-local")
+    maven("https://artifactory.daiv.org/artifactory/gradle-dev-local")
 }
 kotlin {
     jvm {
@@ -41,18 +41,13 @@ kotlin {
             }
         }
     }
-    val hostOs = System.getProperty("os.name")
-    val isMingwX64 = hostOs.startsWith("Windows")
-    val nativeTarget = when {
-        hostOs == "Mac OS X" -> macosX64("native")
-        hostOs == "Linux" -> linuxX64("native")
-        isMingwX64 -> mingwX64("native")
-        else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
-    }
 
-    
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting{
+            dependencies{
+                implementation(versions.kutil())
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test-common"))
@@ -71,8 +66,6 @@ kotlin {
                 implementation(kotlin("test-js"))
             }
         }
-        val nativeMain by getting
-        val nativeTest by getting
     }
 }
 
