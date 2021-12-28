@@ -24,6 +24,7 @@ version = versions.setVersion { appendable }
 repositories {
     mavenCentral()
     maven("https://artifactory.daiv.org/artifactory/gradle-dev-local")
+    maven { url = uri("https://maven.pkg.jetbrains.space/public/p/kotlinx-html/maven") }
 }
 kotlin {
     jvm {
@@ -43,8 +44,8 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting{
-            dependencies{
+        val commonMain by getting {
+            dependencies {
                 implementation(versions.kutil())
                 implementation(versions.kotlinx_html())
             }
@@ -62,6 +63,7 @@ kotlin {
             }
         }
         val jsMain by getting
+
         val jsTest by getting {
             dependencies {
                 implementation(kotlin("test-js"))
