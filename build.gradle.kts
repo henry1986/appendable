@@ -4,13 +4,13 @@ buildscript {
         maven("https://artifactory.daiv.org/artifactory/gradle-dev-local")
     }
     dependencies {
-        classpath("org.daiv.dependency:DependencyHandling:0.0.96")
+        classpath("org.daiv.dependency:DependencyHandling:0.1.14")
     }
 }
 
 plugins {
-    kotlin("multiplatform") version "1.4.10"
-//    kotlin("plugin.serialization") version "1.4.10"
+    kotlin("multiplatform") version "1.6.10"
+//    kotlin("plugin.serialization") version "1.6.10"
     id("com.jfrog.artifactory") version "4.17.2"
     id("org.daiv.dependency.VersionsPlugin") version "0.1.3"
     `maven-publish`
@@ -23,7 +23,6 @@ version = versions.setVersion { appendable }
 
 repositories {
     mavenCentral()
-    maven("https://dl.bintray.com/kotlin/kotlinx")
     maven("https://artifactory.daiv.org/artifactory/gradle-dev-local")
 }
 kotlin {
@@ -43,7 +42,6 @@ kotlin {
         }
     }
 
-    
     sourceSets {
         val commonMain by getting{
             dependencies{
